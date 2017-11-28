@@ -14,7 +14,6 @@
 Vector2 cloudPos;       //!< 雲の位置
 Vector2 cannonPos;      //!< 砲台の位置
 Vector2 bulletPos;      //!< 弾の位置
-float   bulletSpeed;    //!< 弾速
 Rect    targetRect;     //!< ターゲットの矩形
 int     score;          //!< スコア
 
@@ -26,7 +25,6 @@ void Start()
     cannonPos = Vector2(-80, -150);
     targetRect = Rect(80, -140, 40, 40);
     bulletPos.x = -999;
-    bulletSpeed = 100.0f;
     score = 0;
     PlayBGM("bgm_maoudamashii_8bit07.mp3");
 }
@@ -41,16 +39,13 @@ void Update()
 
     // 弾の移動
     if (bulletPos.x > -999) {
-        bulletPos.x += bulletSpeed * Time::deltaTime;
+        bulletPos.x += 10 * Time::deltaTime;
 
         // ターゲットと弾の当たり判定
         Rect bulletRect(bulletPos, Vector2(32, 20));
         if (targetRect.Overlaps(bulletRect)) {
             score += 1;         // スコアの加算
             bulletPos.x = -999; // 弾を発射可能な状態に戻す
-        }
-        if(bulletPos.x > 320) {
-            bulletPos.x = -999;
         }
     }
 
